@@ -1,22 +1,46 @@
-# React (JavaScript) テンプレート
-React (JavaScript) で受験するためのテンプレートです。
-チュートリアル問題の指示に従って、React アプリケーションをビルドし、track 上で提出してみましょう。
+# Tonkatsu DB
 
-#### **注意**
-- 本プロジェクトは [Create React App](https://github.com/facebook/create-react-app) によって生成されています。
-- track で解答するために、本テンプレートを使用することは**必須ではありません**。任意のフレームワークや UI ライブラリが利用できます。最終的に提出する必要があるのは、ビルドされた生成物です。
-- `node` のバージョンは `17.9.1`, `npm` のバージョンは `8.11.0` で動作することを確認しています。
+とんかつ店とメニューを管理するWebアプリケーションです。
 
-## 可能なコマンド
-このプロジェクトのディレクトリ内で、以下のコマンドを実行することができます。
+## Features
 
-### `npm install`
-開発やビルドに必要なモジュールをインストールします。必ず最初に実行してください。
+- 店舗ごとのメニュー一覧表示
+- メニュー登録
+- メニュー編集
+- メニュー削除
+- 店舗ごとの開閉表示
 
-### `npm run`
-アプリケーションを開発モードで実行します。
-[http://localhost:3000](http://localhost:3000) を開き、ブラウザで確認することができます。
-アプリケーションに変更を加えるためには、`src` ディレクトリ以下のファイルを編集してください。
+## Tech Stack
 
-### `npm run build`
-アプリケーションをビルドし、`build` ディレクトリに生成ファイルを保存します。track のチャレンジに解答するためには、ビルドされた生成ファイルをアップロードする必要があります。
+### Frontend
+
+- React
+- JavaScript
+
+### Backend
+
+- Java 17
+- Spring Boot
+- Spring Data JPA
+- Lombok
+
+### Database
+
+- PostgreSQL
+- Amazon RDS
+
+## Architecture
+
+React  
+↓ REST API  
+Spring Boot  
+↓ JPA  
+Amazon RDS for PostgreSQL
+
+## API
+
+- GET /api/shops
+- GET /api/menus
+- POST /api/menus
+- PUT /api/menus/{id}
+- DELETE /api/menus/{id}
