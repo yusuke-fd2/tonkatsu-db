@@ -11,7 +11,10 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/api/shops")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = {
+    "http://localhost:3000",
+    "https://main.d7cgaeiwb3kth.amplifyapp.com"
+})
 @RequiredArgsConstructor
 public class ShopController {
 
