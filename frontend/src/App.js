@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import MenuList from "./components/MenuList";
 import MenuForm from "./components/MenuForm";
 
+const API_BASE_URL =
+  process.env.REACT_APP_API_BASE_URL || "http://localhost:8080";
+
 function App() {
   const [menus, setMenus] = useState([]);
   const [shops, setShops] = useState([]);
@@ -13,7 +16,7 @@ function App() {
   const [error, setError] = useState(null);
 
   const fetchMenus = async () => {
-    const response = await fetch("http://localhost:8080/api/menus");
+    const response = await fetch(`${API_BASE_URL}/api/menus`);
 
     if (!response.ok) {
       throw new Error("メニューの取得に失敗しました");
@@ -24,7 +27,7 @@ function App() {
   };
 
   const fetchShops = async () => {
-    const response = await fetch("http://localhost:8080/api/shops");
+    const response = await fetch(`${API_BASE_URL}/api/shops`);
 
     if (!response.ok) {
       throw new Error("店舗の取得に失敗しました");
@@ -88,7 +91,7 @@ function App() {
     }
 
     const response = await fetch(
-      `http://localhost:8080/api/menus/${menu.id}`,
+      `${API_BASE_URL}/api/menus/${menu.id}`,
       {
         method: "DELETE",
       }

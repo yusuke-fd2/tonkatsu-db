@@ -1,5 +1,8 @@
 import { useState } from "react";
 
+const API_BASE_URL =
+  process.env.REACT_APP_API_BASE_URL || "http://localhost:8080";
+
 function MenuForm({ shops, menu, onSaved, onCancel }) {
   const isEdit = !!menu;
 
@@ -25,8 +28,8 @@ function MenuForm({ shops, menu, onSaved, onCancel }) {
     e.preventDefault();
 
     const url = isEdit
-      ? `http://localhost:8080/api/menus/${menu.id}`
-      : "http://localhost:8080/api/menus";
+      ? `${API_BASE_URL}/api/menus/${menu.id}`
+      : `${API_BASE_URL}/api/menus`;
 
     const response = await fetch(url, {
       method: isEdit ? "PUT" : "POST",
