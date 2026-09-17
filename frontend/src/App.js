@@ -1,58 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import MenuList from "./components/MenuList";
 import MenuForm from "./components/MenuForm";
-
-const API_BASE_URL =
-  process.env.REACT_APP_API_BASE_URL || "http://localhost:8080";
+import useMenuData from "./hooks/useMenuData";
 
 function App() {
-  const [menus, setMenus] = useState([]);
-  const [shops, setShops] = useState([]);
-
+  const { menus, shops, loading, error, refreshMenus, removeMenu } =
+    useMenuData();
   const [showForm, setShowForm] = useState(false);
   const [editingMenu, setEditingMenu] = useState(null);
-
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  const fetchMenus = async () => {
-    const response = await fetch(`${API_BASE_URL}/api/menus`);
-
-    if (!response.ok) {
-      throw new Error("メニューの取得に失敗しました");
-    }
-
-    const data = await response.json();
-    setMenus(data);
-  };
-
-  const fetchShops = async () => {
-    const response = await fetch(`${API_BASE_URL}/api/shops`);
-
-    if (!response.ok) {
-      throw new Error("店舗の取得に失敗しました");
-    }
-
-    const data = await response.json();
-    setShops(data);
-  };
-
-  useEffect(() => {
-    const load = async () => {
-      try {
-        await Promise.all([
-          fetchMenus(),
-          fetchShops(),
-        ]);
-      } catch (e) {
-        setError(e.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    load();
-  }, []);
 
   const handleCreate = () => {
     setEditingMenu(null);
@@ -70,7 +25,7 @@ function App() {
   };
 
   const handleSaved = async () => {
-    await fetchMenus();
+    await refreshMenus();
 
     setShowForm(false);
     setEditingMenu(null);
@@ -90,19 +45,11 @@ function App() {
       return;
     }
 
-    const response = await fetch(
-      `${API_BASE_URL}/api/menus/${menu.id}`,
-      {
-        method: "DELETE",
-      }
-    );
-
-    if (!response.ok) {
-      alert("削除に失敗しました");
-      return;
+    try {
+      await removeMenu(menu.id);
+    } catch (e) {
+      alert(e.message);
     }
-
-    await fetchMenus();
   };
 
   if (loading) {

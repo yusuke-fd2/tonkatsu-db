@@ -1,7 +1,5 @@
 import { useState } from "react";
-
-const API_BASE_URL =
-  process.env.REACT_APP_API_BASE_URL || "http://localhost:8080";
+import { saveMenu } from "../api/menuApi";
 
 function MenuForm({ shops, menu, onSaved, onCancel }) {
   const isEdit = !!menu;
@@ -27,28 +25,12 @@ function MenuForm({ shops, menu, onSaved, onCancel }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const url = isEdit
-      ? `${API_BASE_URL}/api/menus/${menu.id}`
-      : `${API_BASE_URL}/api/menus`;
-
-    const response = await fetch(url, {
-      method: isEdit ? "PUT" : "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        ...form,
-        shopId: Number(form.shopId),
-        price: Number(form.price),
-      }),
-    });
-
-    if (!response.ok) {
-      alert(isEdit ? "更新に失敗しました" : "登録に失敗しました");
-      return;
+    try {
+      await saveMenu(menu, form);
+      onSaved();
+    } catch (e) {
+      alert(e.message);
     }
-
-    onSaved();
   };
 
   const inputStyle = {
