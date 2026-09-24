@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import MenuList from "./components/MenuList";
 import MenuForm from "./components/MenuForm";
+import AiMenuInput from "./components/AiMenuInput";
 import useMenuData from "./hooks/useMenuData";
 
 function App() {
   const { menus, shops, loading, error, refreshMenus, removeMenu } =
     useMenuData();
+
   const [showForm, setShowForm] = useState(false);
   const [editingMenu, setEditingMenu] = useState(null);
 
@@ -69,6 +71,11 @@ function App() {
       }}
     >
       <h1>とんかつデータベース</h1>
+
+      <AiMenuInput
+        shops={shops}
+        onSaved={refreshMenus}
+      />
 
       {!showForm && (
         <button
