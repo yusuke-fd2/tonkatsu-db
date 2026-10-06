@@ -1,6 +1,4 @@
-const API_BASE_URL = (
-  process.env.REACT_APP_API_BASE_URL || "http://localhost:8080"
-).replace(/\/$/, "");
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
 export const API_URLS = {
   menus: `${API_BASE_URL}/api/menus`,

@@ -14,8 +14,12 @@ if (!NODE_ENV) {
   );
 }
 
+const backendEnv = process.env.BACKEND_ENV;
+
 // https://github.com/bkeepers/dotenv#what-other-env-files-can-i-use
 const dotenvFiles = [
+  backendEnv && `${paths.dotenv}.${backendEnv}`,
+
   `${paths.dotenv}.${NODE_ENV}.local`,
   // Don't include `.env.local` for `test` environment
   // since normally you expect tests to produce the same
